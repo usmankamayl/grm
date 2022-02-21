@@ -67,80 +67,29 @@ const goods = [
 ]
 
 
-
-const tableBody = document.querySelector('.table__body');
-
-const element = {
-  td: {
-    class: ['table__cell', 'table__cell_left', 'table__cell_name', 'table__cell_btn-wrapper'],
-  },
-  button: {
-    class: ['table__btn', 'table__btn_pic', 'table__btn_pic_edit', 'table__btn_del'],
-  },
-}
-
-
 function createRow(obj) {
-  const fragment = document.createDocumentFragment();
   const tr = document.createElement('tr');
-  for (let i = 0; i < 8; i++) {
-   const td = document.createElement('td');
-    td.classList.add(obj.td.class[0]);
-    if (i === 1) {
-      td.classList.add(obj.td.class[1], obj.td.class[2]);
-    }
-    if (i === 2) {
-      td.classList.add(obj.td.class[1]);
-    }
-
-    if (i === 7) {
-      td.classList.add(obj.td.class[3]);
-    }
-    fragment.append(td);
-  }
-  tr.append(fragment);
-
-  const btnWrapper = document.querySelectorAll('.table__cell_btn-wrapper');
-
-  for (let i = 0; i < 3; i++) {
-    const button = document.createElement('button');
-    button.classList.add(obj.button.class[0]);
-    if (i === 0) {
-      button.classList.add(obj.button.class[1]);
-    }
-    if (i === 1) {
-      button.classList.add(obj.button.class[2]);
-    }
-
-    if (i === 2) {
-      button.classList.add(obj.button.class[3]);
-    }
-    tr.lastElementChild .append(button);
-  }
-
+  const btnWrapper = document.querySelector('.table__cell_btn-wrapper')
+    .cloneNode(true);
+  tr.innerHTML = ` <td class="table__cell">${obj.id + 1}</td>
+                <td class="table__cell table__cell_left table__cell_name" data-id="246016548">
+                <span>id: 246016548</span>
+                ${obj.title}
+                </td>
+                <td class="table__cell table__cell_left">${obj.category}</td>
+                <td class="table__cell">шт</td>
+                <td class="table__cell">${obj.count}</td>
+                <td class="table__cell">${obj.price}</td>
+                <td class="table__cell">${obj.count * obj.price}</td>`;
+  tr.append(btnWrapper);
   return tr;
 }
 
-
 function renderGoods(arr) {
-
-  for (let i = 0; i < arr.length; i++) {
-    const row = createRow(element);
-    tableBody.append(row);
-  }
-   const tr = tableBody.querySelectorAll('tr');
-   console.log(tr, 123333);
-  tr.forEach((item, i) => {
-    const td = item.querySelectorAll('td');
-    td[0].textContent = arr[i].id;
-    td[1].textContent = arr[i].title;
-    td[2].textContent = arr[i].category;
-    td[3].textContent = arr[i].units;
-    td[4].textContent = arr[i].count;
-    td[5].textContent = arr[i].price;
+  const tableBody = document.querySelector('.table__body');
+  arr.forEach(item => {
+    tableBody.append(createRow(item));
   })
 }
 
 renderGoods(goods);
-
-
