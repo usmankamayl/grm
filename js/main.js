@@ -1,12 +1,4 @@
 'use strict';
-
-const modalTitle = document.querySelector('.modal__title');
-const modalForm = document.querySelector('.modal__form');
-const modalCheckbox = document.querySelector('.modal__checkbox');
-const modalInput = document.querySelector('.modal__checkbox + .modal__input');
-const overlay = document.querySelector('.overlay');
-overlay.classList.remove('active');
-
 const goods = [
   {
     "id": 253842678,
@@ -66,6 +58,17 @@ const goods = [
   }
 ]
 
+const modalTitle = document.querySelector('.modal__title');
+const modalForm = document.querySelector('.modal__form');
+const modalCheckbox = document.querySelector('.modal__checkbox');
+const modalInput = document.querySelector('.modal__checkbox + .modal__input');
+const overlay = document.querySelector('.overlay');
+overlay.classList.remove('active');
+const btnAddGood = document.querySelector('.panel__add-goods');
+const btnCloseModal = document.querySelector('.modal__close');
+const overlayModal = document.querySelector('.modal');
+
+
 
 function createRow(obj) {
   const tr = document.createElement('tr');
@@ -93,3 +96,19 @@ function renderGoods(arr) {
 }
 
 renderGoods(goods);
+
+btnAddGood.addEventListener('click', () => {
+  overlay.classList.add('active');
+});
+
+overlay.addEventListener('click', () => {
+  overlay.classList.remove('active');
+});
+
+overlayModal.addEventListener('click', event => {
+  event.stopPropagation();
+});
+
+btnCloseModal.addEventListener('click', () => {
+  overlay.classList.remove('active');
+});
