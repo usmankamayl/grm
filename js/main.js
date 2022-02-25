@@ -72,8 +72,6 @@ const overlayModal = document.querySelector('.modal');
 
 function createRow(obj) {
   const tr = document.createElement('tr');
-  const btnWrapper = document.querySelector('.table__cell_btn-wrapper')
-    .cloneNode(true);
   tr.innerHTML = ` <td class="table__cell">${obj.id + 1}</td>
                 <td class="table__cell table__cell_left table__cell_name" data-id="246016548">
                 <span>id: 246016548</span>
@@ -83,8 +81,12 @@ function createRow(obj) {
                 <td class="table__cell">шт</td>
                 <td class="table__cell">${obj.count}</td>
                 <td class="table__cell">${obj.price}</td>
-                <td class="table__cell">${obj.count * obj.price}</td>`;
-  tr.append(btnWrapper);
+                <td class="table__cell">${obj.count * obj.price}</td>
+                <td class="table__cell table__cell_btn-wrapper">
+                  <button class="table__btn table__btn_pic"></button>
+                  <button class="table__btn table__btn_edit"></button>
+                  <button class="table__btn table__btn_del"></button>
+                </td>`;
   return tr;
 }
 
@@ -101,14 +103,22 @@ btnAddGood.addEventListener('click', () => {
   overlay.classList.add('active');
 });
 
-overlay.addEventListener('click', () => {
-  overlay.classList.remove('active');
+overlay.addEventListener('click', e => {
+  const target = e.target;
+  if (target === overlay || target.closest('.modal__close')) {
+    overlay.classList.remove('active');
+  }
 });
+const rows = document.querySelectorAll('.table__body tr');
+rows.forEach((row, index) => {
+  row.addEventListener('click', e => {
 
-overlayModal.addEventListener('click', event => {
-  event.stopPropagation();
-});
+    if (e.target.closest('.table__btn_del')) {
+      row.remove();
+      console.log('goods: ', goods);
+    }
+  })
+})
 
-btnCloseModal.addEventListener('click', () => {
-  overlay.classList.remove('active');
-});
+
+
