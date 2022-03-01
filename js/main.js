@@ -110,7 +110,10 @@ modalForm.querySelectorAll('input').forEach(input => {
   if (input.name === 'count' || input.name === 'discount_count' || input.name === 'price' || input.name === 'count') {
     input.setAttribute('type','number');
   }
-  input.setAttribute('required', 'true');
+  if (input.name !== 'image') {
+    input.setAttribute('required', 'true');
+  }
+
 })
 
 overlay.addEventListener('click', e => {
@@ -133,7 +136,10 @@ function getTotalPrice () {
 modalCheckbox.addEventListener('change', () => {
   if (modalCheckbox.checked) {
     modalInput.removeAttribute('disabled');
-  } else  modalInput.setAttribute('disabled', 'disabled');
+  } else {
+    modalInput.setAttribute('disabled', 'disabled');
+    modalInput.value = '';
+  }
 })
 
 modalForm.total.value = `$ 0`;
@@ -160,7 +166,6 @@ function removeRow () {
       if (e.target.closest('.table__btn_del')) {
         row.remove();
         getTotalPrice();
-        console.log('goods: ', goods);
       }
     })
   });
