@@ -1,4 +1,3 @@
-'use strict';
 const goods = [
   {
     "id": 253842678,
@@ -58,118 +57,23 @@ const goods = [
   }
 ]
 
-const modalTitle = document.querySelector('.modal__title');
-const modalForm = document.querySelector('.modal__form');
-const modalCheckbox = document.querySelector('.modal__checkbox');
-const modalInput = document.querySelector('.modal__checkbox + .modal__input');
-const overlay = document.querySelector('.overlay');
-overlay.classList.remove('active');
-const btnAddGood = document.querySelector('.panel__add-goods');
-const btnCloseModal = document.querySelector('.modal__close');
-const overlayModal = document.querySelector('.modal');
-const tableBody = document.querySelector('.table__body');
-const totalPrice = modalForm.querySelector('.modal__total-price');
-let id;
+import {renderGoods} from "./modules/render.js";
+import {addClassActive} from "./modules/attributes.js";
+import {addAttribute} from "./modules/attributes.js";
+import {removeClassActive} from "./modules/attributes.js";
+import {checkedInput} from "./modules/attributes.js";
+import {addNewGood} from "./modules/goods.js";
+import {priceOnBlur} from "./modules/price.js";
+import {removeRow} from "./modules/render.js";
+import {getTotalPrice} from "./modules/price.js";
 
-function createRow(obj) {
-  const tr = document.createElement('tr');
-  tr.innerHTML = ` <td class="table__cell">${obj.id}</td>
-                <td class="table__cell table__cell_left table__cell_name" data-id="246016548">
-                <span class="vendor-code__id">${obj.id}</span>
-                ${obj.name}
-                </td>
-                <td class="table__cell table__cell_left">${obj.category}</td>
-                <td class="table__cell">шт</td>
-                <td class="table__cell">${obj.count}</td>
-                <td class="table__cell">${obj.price}</td>
-                <td class="table__cell table__cell-price">${obj.count * obj.price}</td>
-                <td class="table__cell table__cell_btn-wrapper">
-                  <button class="table__btn table__btn_pic"></button>
-                  <button class="table__btn table__btn_edit"></button>
-                  <button class="table__btn table__btn_del"></button>
-                </td>`;
-  return tr;
-}
-
-function renderGoods(arr) {
-  arr.forEach(item => {
-    tableBody.append(createRow(item));
-  })
-}
 
 renderGoods(goods);
-
-btnAddGood.addEventListener('click', () => {
-  overlay.classList.add('active');
-    id = +([1, 2, 3, 4, 5, 6, 7, 8, 9].sort(() => Math.random() - 0.5)).reduce((a, b)=> {
-    return a.toString() + b.toString();
-  });
-});
-
-modalForm.querySelectorAll('input').forEach(input => {
-  if (input.name === 'count' || input.name === 'discount_count' || input.name === 'price' || input.name === 'count') {
-    input.setAttribute('type','number');
-  }
-  if (input.name !== 'image') {
-    input.setAttribute('required', 'true');
-  }
-
-})
-
-overlay.addEventListener('click', e => {
-  const target = e.target;
-  if (target === overlay || target.closest('.modal__close')) {
-    overlay.classList.remove('active');
-  }
-});
-
-function getTotalPrice () {
-  const total = Array.from(tableBody.querySelectorAll('.table__cell-price'));
-  let allTotal = 0;
-  total.forEach(el => {
-    allTotal += Number(el.textContent);
-  })
-  document.querySelector('.crm__total-price').textContent = allTotal;
-  return allTotal;
-}
-
-modalCheckbox.addEventListener('change', () => {
-  if (modalCheckbox.checked) {
-    modalInput.removeAttribute('disabled');
-  } else {
-    modalInput.setAttribute('disabled', 'disabled');
-    modalInput.value = '';
-  }
-})
-
-modalForm.total.value = `$ 0`;
-modalForm.addEventListener('submit', e => {
-  e.preventDefault();
-  const form = new FormData(e.target);
-  const newGood = Object.fromEntries(form);
-  newGood.id = id;
-  tableBody.append(createRow(newGood));
-  getTotalPrice();
-  modalForm.total.textContent = `$ 0`;
-  removeRow();
-  e.target.reset();
-});
-
-modalForm.price.addEventListener('blur', () => {
-  modalForm.total.value = `$ ${modalForm.price.value * modalForm.count.value}`;
-});
-
-function removeRow () {
-  const rows = tableBody.querySelectorAll('.table__body tr');
-  rows.forEach((row, index) => {
-    row.addEventListener('click', e => {
-      if (e.target.closest('.table__btn_del')) {
-        row.remove();
-        getTotalPrice();
-      }
-    })
-  });
-}
-
+addClassActive();
+addAttribute();
+removeClassActive();
+checkedInput();
+addNewGood();
+priceOnBlur();
 removeRow();
 getTotalPrice();
