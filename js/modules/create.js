@@ -11,7 +11,7 @@ export const createRow = function (obj) {
                 <td class="table__cell">${obj.price}</td>
                 <td class="table__cell table__cell-price">${obj.count * obj.price}</td>
                 <td class="table__cell table__cell_btn-wrapper">
-                  <button class="table__btn table__btn_pic"></button>
+                  <button class="table__btn table__btn_pic" data-pic="img.html"></button>
                   <button class="table__btn table__btn_edit"></button>
                   <button class="table__btn table__btn_del"></button>
                 </td>`;

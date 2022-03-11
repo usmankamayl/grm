@@ -77,3 +77,13 @@ addNewGood();
 priceOnBlur();
 removeRow();
 getTotalPrice();
+
+
+const btnPic = document.querySelectorAll('.table__btn_pic');
+
+btnPic.forEach(el => {
+  el.addEventListener('click', () => {
+    open(`${el.dataset.pic}`, '', 'width=800, height=600, top=132, left=368');
+  })
+})
+console.log(window.screen);
