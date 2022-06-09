@@ -31,6 +31,10 @@ export const removeClassActive = function () {
     const target = e.target;
     if (target === overlay || target.closest('.modal__close')) {
       overlay.classList.remove('active');
+      if (document.querySelector('.img-text')) {
+        console.log('.img-text')
+        document.querySelector('.img-text').remove();
+      }
     }
   });
 }

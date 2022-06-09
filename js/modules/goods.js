@@ -18,3 +18,5 @@ export const addNewGood = function () {
     e.target.reset();
   });
 }
+
+

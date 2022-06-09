@@ -87,3 +87,29 @@ btnPic.forEach(el => {
   })
 })
 console.log(window.screen);
+
+const modalFile = document.querySelector('.modal__file');
+
+modalFile.addEventListener('change', () => {
+  const img = document.createElement('img');
+  if (modalFile.files.length > 0) {
+    const src = URL.createObjectURL(modalFile.files[0]);
+    console.log(modalFile.files[0])
+    console.log(src, ": src")
+    img.src = src;
+    img.style.cssText = `
+  width: 100px;
+  height: 50px;
+  `;
+  }
+
+  if (modalFile.files[0].size < 1048576) {
+    modalFile.insertAdjacentElement('beforebegin', img);
+  } else {
+    console.log('1024');
+    modalFile.insertAdjacentHTML('beforebegin', '<p class="img-text" style="color: red;font-size: 18px">изображение не должно превышать размер 1 мб</p>');
+  }
+
+})
+
+
